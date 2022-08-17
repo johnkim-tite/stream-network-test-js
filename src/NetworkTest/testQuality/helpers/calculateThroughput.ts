@@ -39,9 +39,9 @@ function getAverageBitrateAndPlr(type: AV, statsList: QualityStats[]): AverageSt
   return { ...averageStats };
 }
 
-export default function calculateThroughput(state: MOSState): HasAudioVideo<AverageStats> {
+export default function calculateThroughput(state: MOSState, duration: number): HasAudioVideo<AverageStats> {
 
-  const sampleWindow = getLatestSampleWindow(state.statsLog);
+  const sampleWindow = getLatestSampleWindow(state.statsLog, duration);
   const qualityStats = calculateQualityStats(sampleWindow);
 
   const averageAudioStats = () => {

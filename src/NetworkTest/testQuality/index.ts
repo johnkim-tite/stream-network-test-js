@@ -305,7 +305,12 @@ function checkSubscriberQuality(
               processResults();
             };
 
-            let duration = options?.timeout ? options?.timeout : config.getStatsVideoAndAudioTestDuration;
+            let duration: number;
+            duration = config.getStatsVideoAndAudioTestDuration;
+            if(options && options.timeout)
+            {
+              duration = options.timeout;
+            }
 
             subscriberMOS(builder.state, subscriber, publisher, getStatsListener, resultsCallback, duration);
 
