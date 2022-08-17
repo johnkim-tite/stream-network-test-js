@@ -305,7 +305,9 @@ function checkSubscriberQuality(
               processResults();
             };
 
-            subscriberMOS(builder.state, subscriber, publisher, getStatsListener, resultsCallback);
+            let duration = options?.timeout ? options?.timeout : config.getStatsVideoAndAudioTestDuration;
+
+            subscriberMOS(builder.state, subscriber, publisher, getStatsListener, resultsCallback, duration);
 
             // We add +1 to the testTimeout value in order to consider the last stats snapshot.
             mosEstimatorTimeoutId = window.setTimeout(processResults, testTimeout + 1);
@@ -355,7 +357,8 @@ export function testQuality(
     testTimeout = audioOnly ? config.getStatsAudioOnlyDuration :
       config.getStatsVideoAndAudioTestDuration;
     if (options && options.timeout) {
-      testTimeout = Math.min(testTimeout, options.timeout, 30000);
+      //testTimeout = Math.min(testTimeout, options.timeout, 30000);
+      testTimeout = options.timeout;
     }
     const onSuccess = (results: QualityTestResults) => {
       stopTest = undefined;

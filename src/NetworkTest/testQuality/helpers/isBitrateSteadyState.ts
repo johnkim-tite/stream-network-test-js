@@ -4,12 +4,12 @@ import config from './config';
 import { AV } from '../types/stats';
 import { OT } from '../../types/opentok';
 
-export default function isBitrateSteadyState(statsList: OT.SubscriberStats[]): boolean {
-  const latestSamples = getLatestSampleWindow(statsList);
-  const steadyStateAllowedDelta = config.steadyStateAllowedDelta;
+export default function isBitrateSteadyState(statsList: OT.SubscriberStats[], duration: number): boolean {
+  const latestSamples = getLatestSampleWindow(statsList, duration);
+  const steadyStateAllowedDelta = config.steadyStateAllowedDelta;  
   let isSteadyState = true;
 
-  if (latestSamples.length < config.minimumVideoAndAudioTestSampleSize) {
+  if (latestSamples.length < (duration / config.getStatsInterval)) {
     return false;
   }
 

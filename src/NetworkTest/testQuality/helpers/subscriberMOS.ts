@@ -136,7 +136,8 @@ export default function subscriberMOS(
   subscriber: OT.Subscriber,
   publisher: OT.Publisher,
   getStatsListener: StatsListener,
-  callback: (state: MOSState) => void) {
+  callback: (state: MOSState) => void,
+  duration: number) {
   mosState.intervalId = window.setInterval(
     () => {
       subscriber.getStats(async (error?: OT.OTError, stats?: OT.SubscriberStats) => {
@@ -158,7 +159,7 @@ export default function subscriberMOS(
          * We know that we're receiving "faulty" stats when we see a negative
          * value for bytesReceived.
          */
-        if (stats.audio.bytesReceived < 0 || getOr(1, 'video.bytesReceived', stats) < 0) {
+        if (stats.audio.bytesReceived < 0 || getOr<number>(1, 'video.bytesReceived', stats) < 0) {
           mosState.clearInterval();
           return callback(mosState);
         }
@@ -182,7 +183,7 @@ export default function subscriberMOS(
         mosState.pruneScores();
 
         // If bandwidth has reached a steady state, end the test early
-        if (isBitrateSteadyState(mosState.statsLog)) {
+        if (isBitrateSteadyState(mosState.statsLog, duration)) {
           mosState.clearInterval();
           return callback(mosState);
         }
