@@ -174,7 +174,7 @@ export default function subscriberMOS(
           return null;
         }
 
-        mosState.stats = calculateThroughput(mosState);
+        mosState.stats = calculateThroughput(mosState, duration);
         const videoScore = calculateVideoScore(subscriber, mosState.statsLog);
         mosState.videoScoresLog.push(videoScore);
 
