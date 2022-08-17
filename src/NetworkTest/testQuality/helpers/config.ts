@@ -26,14 +26,14 @@ export type QualityTestConfig = {
 
 const config: QualityTestConfig = {
   getStatsInterval: 1000,
-  getStatsVideoAndAudioTestDuration: 30000,
+  getStatsVideoAndAudioTestDuration: 60000,
   getStatsAudioOnlyDuration: 10000,
   subscribeOptions: {
     testNetwork: true,
     audioVolume: 0,
   },
-  minimumVideoAndAudioTestSampleSize: 5,
-  steadyStateSampleWindow: 5000, // this is also used to calculate bandwidth
+  minimumVideoAndAudioTestSampleSize: 60,
+  steadyStateSampleWindow: 60000, // this is also used to calculate bandwidth
   steadyStateAllowedDelta: 0.05, // 1 = 100%, from point to point
   qualityThresholds: {
     video: [
